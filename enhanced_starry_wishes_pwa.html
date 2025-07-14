@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>星空许愿 ✨</title>
+    
+    <!-- PWA 配置 -->
+    <link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoi5pif56m66K645oS/IEFwcCIsInNob3J0X25hbWUiOiLmmJ/nqbrorrjmhL8iLCJzdGFydF91cmwiOiIuIiwiZGlzcGxheSI6InN0YW5kYWxvbmUiLCJiYWNrZ3JvdW5kX2NvbG9yIjoiIzEyMGYyYSIsInRoZW1lX2NvbG9yIjoiIzhhMmJlMiIsImljb25zIjpbeyJzcmMiOiJkYXRhOmltYWdlL3N2Zyt4bWw7YmFzZTY0LFBITjJaeUI0Yld4dWN6MGlhSFIwY0RvdkwzZDNkeTUzTXk1dmNtY3ZNakF3TUM5emRtY2lJSGRwWkhSb1BTSXhPREFpSUdobGFXZG9kRDBpTVRnd0lqNDhjbVZqZENCM2FXUjBhRDBpTVRnd0lpQm9aV2xuYUhROUlqRTRNQ0lnWm1sc2JEMGlJekV5TUdZeVlTSXZQangwWlhoMElIZzlJamt3SWlCNVBTSTVNQ0lnWm1sc2JEMGlJM1ptWm1abUlpQjBaWGgwTFdGdVkyaHZjakFpYm1sa1pHeGxJajV6ZEdGeWNua2lMeTA4TDNSbGVIUStQQzl6ZG1jKyIsInR5cGUiOiJpbWFnZS9zdmcreG1sIiwic2l6ZXMiOiIxOTJ4MTkyIn1dfQ==">
+    <meta name="theme-color" content="#8a2be2">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="星空许愿">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: radial-gradient(circle at 20% 80%, #120f2a 0%, #2a1b3d 40%, #1e0836 100%);
+            min-height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .stars {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 2s infinite alternate;
+        }
+
+        .star.golden {
+            background: #ffd700;
+            box-shadow: 0 0 10px #ffd700;
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0.3; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1.2); }
+        }
+
+        .shooting-star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: #fff;
+            border-radius: 50%;
+            animation: shoot 3s linear infinite;
+        }
+
+        @keyframes shoot {
+            0% {
+                transform: translateX(0) translateY(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translateX(300px) translateY(300px);
+                opacity: 0;
+            }
+        }
+
+        .container {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .title {
+            color: #fff;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-align: center;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 20px rgba(255, 255, 255, 0.5); }
+            to { text-shadow: 0 0 30px rgba(255, 255, 255, 0.8), 0 0 40px rgba(138, 43, 226, 0.5); }
+        }
+
+        .subtitle {
+            color: #ddd;
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            opacity: 0.9;
+        }
+
+        .moon {
+            position: absolute;
+            top: 10%;
+            right: 10%;
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle at 30% 30%, #fff 0%, #f0f0f0 100%);
+            border-radius: 50%;
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+            animation: moonGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes moonGlow {
+            0% { box-shadow: 0 0 30px rgba(255, 255, 255, 0.3); }
+            100% { box-shadow: 0 0 50px rgba(255, 255, 255, 0.6); }
+        }
+
+        .wish-area {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .wish-input {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            color: white;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .wish-input:focus {
+            border-color: #8a2be2;
+            box-shadow: 0 0 20px rgba(138, 43, 226, 0.4);
+        }
+
+        .wish-input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .wish-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(45deg, #8a2be2, #4169e1);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .wish-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(138, 43, 226, 0.4);
+        }
+
+        .wish-btn:active {
+            transform: translateY(0);
+        }
+
+        .wishes-container {
+            width: 100%;
+            max-width: 600px;
+            max-height: 300px;
+            overflow-y: auto;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            backdrop-filter: blur(5px);
+        }
+
+        .wish-item {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            animation: wishAppear 0.5s ease-out;
+        }
+
+        .wish-item.completed {
+            background: rgba(255, 215, 0, 0.15);
+            border-color: rgba(255, 215, 0, 0.3);
+        }
+
+        .wish-item.completed .wish-text {
+            text-decoration: line-through;
+            opacity: 0.8;
+        }
+
+        @keyframes wishAppear {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .wish-text {
+            font-size: 1rem;
+            line-height: 1.4;
+            margin-bottom: 0.5rem;
+            padding-right: 80px;
+        }
+
+        .wish-time {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.6);
+            text-align: right;
+        }
+
+        .wish-controls {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .complete-btn, .delete-btn {
+            border: none;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            color: white;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .complete-btn {
+            background: rgba(100, 255, 100, 0.3);
+        }
+
+        .complete-btn:hover {
+            background: rgba(100, 255, 100, 0.6);
+            transform: scale(1.1);
+        }
+
+        .delete-btn {
+            background: rgba(255, 100, 100, 0.3);
+        }
+
+        .delete-btn:hover {
+            background: rgba(255, 100, 100, 0.6);
+            transform: scale(1.1);
+        }
+
+        .wish-stats {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: white;
+            font-size: 0.9rem;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            backdrop-filter: blur(5px);
+        }
+
+        .wish-counter {
+            display: inline-block;
+            margin-right: 1rem;
+        }
+
+        .enter-hint {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.5);
+            text-align: center;
+            margin-top: 0.5rem;
+        }
+
+        .empty-wishes {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.6);
+            font-style: italic;
+            margin: 2rem 0;
+        }
+
+        .magical-particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: #ffd700;
+            border-radius: 50%;
+            animation: floatUp 4s ease-out infinite;
+        }
+
+        @keyframes floatUp {
+            0% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-100px) scale(0.3);
+            }
+        }
+
+        .wish-sparkle {
+            position: absolute;
+            right: 45px;
+            top: 10px;
+            font-size: 1.2rem;
+            animation: sparkle 1.5s ease-in-out infinite;
+        }
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 0; transform: scale(0.5) rotate(0deg); }
+            50% { opacity: 1; transform: scale(1) rotate(180deg); }
+        }
+
+        .constellation {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .constellation-line {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.3);
+            height: 1px;
+            transform-origin: left center;
+            animation: drawLine 2s ease-in-out infinite;
+        }
+
+        @keyframes drawLine {
+            0% { width: 0; opacity: 0; }
+            50% { opacity: 1; }
+            100% { width: 100%; opacity: 0.3; }
+        }
+
+        .star-message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.95);
+            color: #333;
+            padding: 2rem;
+            border-radius: 20px;
+            text-align: center;
+            max-width: 350px;
+            z-index: 1000;
+            animation: messageAppear 0.5s ease-out;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        @keyframes messageAppear {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+
+        .message-close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .backup-controls {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .backup-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .backup-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .install-prompt {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(138, 43, 226, 0.9);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            text-align: center;
+            z-index: 1000;
+            animation: slideUp 0.5s ease-out;
+            backdrop-filter: blur(10px);
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateX(-50%) translateY(100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+
+        .install-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 15px;
+            cursor: pointer;
+            margin: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .install-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .title {
+                font-size: 2rem;
+            }
+            
+            .container {
+                padding: 1rem;
+            }
+            
+            .wish-area {
+                padding: 1.5rem;
+            }
+            
+            .wishes-container {
+                max-height: 250px;
+            }
+            
+            .wish-stats {
+                font-size: 0.8rem;
+                padding: 0.4rem 0.8rem;
+            }
+            
+            .backup-controls {
+                flex-direction: column;
+                gap: 5px;
+            }
+            
+            .backup-btn {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.7rem;
+            }
+
+            .install-prompt {
+                bottom: 10px;
+                left: 10px;
+                right: 10px;
+                transform: none;
+                padding: 0.8rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="stars" id="stars"></div>
+    <div class="moon"></div>
+    <div class="constellation" id="constellation"></div>
+    <div class="magical-particles" id="particles"></div>
+    <div class="wish-stats">
+        <span class="wish-counter">心愿: <span id="wishCount">0</span></span>
+        <span class="wish-counter">实现: <span id="completedCount">0</span></span>
+        <span>✨ 每个心愿都会被星星记住</span>
+    </div>
+
+    <div class="container">
+        <h1 class="title">星空许愿 ✨</h1>
+        <p class="subtitle">在这片星空下，许下你的心愿吧～流星会把它们带到宇宙的另一端</p>
+        
+        <div class="wish-area">
+            <input type="text" class="wish-input" id="wishInput" placeholder="在这里写下你的心愿..." maxlength="100">
+            <button class="wish-btn" onclick="makeWish()">
+                <span>向星空许愿 🌟</span>
+            </button>
+            <div class="enter-hint">按 Enter 键也可以许愿哦 ✨</div>
+        </div>
+
+        <div class="wishes-container">
+            <div class="empty-wishes" id="emptyWishes">还没有许愿哦～快写下你的第一个心愿吧！</div>
+            <div id="wishesList"></div>
+        </div>
+    </div>
+
+    <div class="backup-controls">
+        <button class="backup-btn" onclick="exportWishes()">📤 导出心愿</button>
+        <button class="backup-btn" onclick="document.getElementById('importInput').click()">📥 导入心愿</button>
+        <input type="file" id="importInput" class="file-input" accept=".json" onchange="importWishes(event)">
+    </div>
+
+    <script>
+        let wishes = [];
+        let starCount = 150;
+        let shootingStarInterval;
+        let particleInterval;
+        let deferredPrompt;
+        let starMessages = [
+            "🌟 星空听到了你的心愿，正在为你准备惊喜...",
+            "✨ 流星告诉我，你的愿望很美好呢！",
+            "🌙 月亮说，坚持下去，愿望会实现的！",
+            "💫 宇宙的另一端，有人正在为你的梦想加油！",
+            "🌟 星星们在窃窃私语，说你今天特别闪亮！",
+            "✨ 银河系邮递员刚刚送来了一份好运～",
+            "🌙 今夜的星空格外温柔，就像你的心愿一样！",
+            "🌟 北极星点头表示，你的愿望已经登记成功！",
+            "💫 流星雨说，今天是个许愿的好日子！",
+            "✨ 天空中的云朵都在为你的梦想鼓掌！"
+        ];
+
+        // PWA安装提示
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            showInstallPrompt();
+        });
+
+        function showInstallPrompt() {
+            const installPrompt = document.createElement('div');
+            installPrompt.className = 'install-prompt';
+            installPrompt.innerHTML = `
+                <div>🌟 把星空许愿添加到主屏幕</div>
+                <div style="font-size: 0.8rem; margin: 0.5rem 0;">像真正的App一样使用！</div>
+                <button class="install-btn" onclick="installApp()">✨ 安装应用</button>
+                <button class="install-btn" onclick="this.parentElement.remove()">稍后再说</button>
+            `;
+            document.body.appendChild(installPrompt);
+            
+            setTimeout(() => {
+                if (installPrompt.parentElement) {
+                    installPrompt.remove();
+                }
+            }, 10000);
+        }
+
+        async function installApp() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                if (outcome === 'accepted') {
+                    showStarMessage('🎉 安装成功！现在可以从主屏幕访问星空许愿了！');
+                }
+                deferredPrompt = null;
+            }
+            document.querySelector('.install-prompt')?.remove();
+        }
+
+        // 从本地存储加载心愿
+        function loadWishes() {
+            try {
+                const savedWishes = localStorage.getItem('starryWishes');
+                if (savedWishes) {
+                    wishes = JSON.parse(savedWishes);
+                    displayWishes();
+                    updateWishCount();
+                } else {
+                    wishes = [];
+                }
+            } catch (e) {
+                console.log('加载心愿失败，使用空列表');
+                wishes = [];
+            }
+        }
+
+        // 保存心愿到本地存储
+        function saveWishes() {
+            try {
+                localStorage.setItem('starryWishes', JSON.stringify(wishes));
+            } catch (e) {
+                console.log('保存心愿失败');
+                showStarMessage('💫 保存失败，请检查存储空间是否足够～');
+            }
+        }
+
+        // 创建星空
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            starsContainer.innerHTML = '';
+            
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                
+                // 随机创建一些金色的星星
+                if (Math.random() < 0.1) {
+                    star.classList.add('golden');
+                }
+                
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.width = Math.random() * 3 + 1 + 'px';
+                star.style.height = star.style.width;
+                star.style.animationDelay = Math.random() * 2 + 's';
+                starsContainer.appendChild(star);
+            }
+        }
+
+        // 创建流星
+        function createShootingStar() {
+            const shootingStar = document.createElement('div');
+            shootingStar.className = 'shooting-star';
+            shootingStar.style.left = Math.random() * 100 + '%';
+            shootingStar.style.top = Math.random() * 50 + '%';
+            shootingStar.style.animationDuration = Math.random() * 2 + 2 + 's';
+            
+            const trail = document.createElement('div');
+            trail.style.position = 'absolute';
+            trail.style.width = '50px';
+            trail.style.height = '1px';
+            trail.style.background = 'linear-gradient(90deg, transparent, white, transparent)';
+            trail.style.left = '-25px';
+            trail.style.top = '0';
+            shootingStar.appendChild(trail);
+
+            document.getElementById('stars').appendChild(shootingStar);
+
+            setTimeout(() => {
+                shootingStar.remove();
+            }, 3000);
+        }
+
+        // 创建魔法粒子效果
+        function createMagicalEffect() {
+            const particles = document.getElementById('particles');
+            for (let i = 0; i < 20; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 2 + 's';
+                particles.appendChild(particle);
+
+                setTimeout(() => {
+                    particle.remove();
+                }, 4000);
+            }
+        }
+
+        // 显示星空消息
+        function showStarMessage(customMessage = null) {
+            const message = customMessage || starMessages[Math.floor(Math.random() * starMessages.length)];
+            
+            // 移除已存在的消息
+            document.querySelectorAll('.star-message').forEach(msg => msg.remove());
+            
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'star-message';
+            messageDiv.innerHTML = `
+                <button class="message-close" onclick="this.parentElement.remove()">×</button>
+                <div style="font-size: 1.2rem; margin-bottom: 1rem;">${message}</div>
+                <div style="font-size: 0.9rem; color: #666;">— 来自星空的悄悄话</div>
+            `;
+            document.body.appendChild(messageDiv);
+            
+            setTimeout(() => {
+                if (messageDiv.parentElement) {
+                    messageDiv.remove();
+                }
+            }, 5000);
+        }
+
+        // 许愿功能
+        function makeWish() {
+            const wishInput = document.getElementById('wishInput');
+            const wishText = wishInput.value.trim();
+            
+            if (wishText) {
+                const wish = {
+                    text: wishText,
+                    time: new Date().toLocaleString('zh-CN'),
+                    id: Date.now(),
+                    completed: false
+                };
+                
+                wishes.unshift(wish);
+                wishInput.value = '';
+                
+                saveWishes();
+                displayWishes();
+                updateWishCount();
+                createMagicalEffect();
+                createShootingStar();
+                
+                document.getElementById('emptyWishes').style.display = 'none';
+                showWishSuccess();
+                
+                // 随机显示星空消息
+                setTimeout(() => {
+                    if (Math.random() < 0.4) { // 40%概率显示消息
+                        showStarMessage();
+                    }
+                }, 2000);
+            }
+        }
+
+        // 显示许愿成功反馈
+        function showWishSuccess() {
+            const button = document.querySelector('.wish-btn');
+            const originalBg = button.style.background;
+            const originalContent = button.innerHTML;
+            
+            button.style.background = 'linear-gradient(45deg, #ffd700, #ff6b6b)';
+            button.innerHTML = '<span>✨ 心愿已送达星空 ✨</span>';
+            
+            setTimeout(() => {
+                button.style.background = 'linear-gradient(45deg, #8a2be2, #4169e1)';
+                button.innerHTML = '<span>向星空许愿 🌟</span>';
+            }, 1500);
+        }
+
+        // 完成心愿
+        function completeWish(id) {
+            const wish = wishes.find(w => w.id === id);
+            if (wish) {
+                wish.completed = !wish.completed;
+                saveWishes();
+                displayWishes();
+                updateWishCount();
+                
+                if (wish.completed) {
+                    createMagicalEffect();
+                    setTimeout(() => {
+                        showStarMessage('🎉 恭喜你！又一个心愿达成了！星空为你感到骄傲！');
+                    }, 1000);
+                }
+            }
+        }
+
+        // 显示许愿列表
+        function displayWishes() {
+            const wishesList = document.getElementById('wishesList');
+            wishesList.innerHTML = '';
+            
+            wishes.forEach(wish => {
+                const wishItem = document.createElement('div');
+                wishItem.className = `wish-item ${wish.completed ? 'completed' : ''}`;
+                wishItem.innerHTML = `
+                    <div class="wish-sparkle">${wish.completed ? '🌟' : '✨'}</div>
+                    <div class="wish-text">${wish.completed ? '🌟' : '✨'} ${wish.text}</div>
+                    <div class="wish-time">${wish.time}</div>
+                    <div class="wish-controls">
+                        <button class="complete-btn" onclick="completeWish(${wish.id})" title="${wish.completed ? '标记为未完成' : '标记为已完成'}">
+                            ${wish.completed ? '↶' : '✓'}
+                        </button>
+                        <button class="delete-btn" onclick="deleteWish(${wish.id})" title="删除心愿">
+                            ×
+                        </button>
+                    </div>
+                `;
+                wishesList.appendChild(wishItem);
+            });
+            
+            document.getElementById('emptyWishes').style.display = wishes.length === 0 ? 'block' : 'none';
+        }
+
+        // 删除心愿
+        function deleteWish(id) {
+            const index = wishes.findIndex(w => w.id === id);
+            if (index > -1) {
+                wishes.splice(index, 1);
+                saveWishes();
+                displayWishes();
+                updateWishCount();
+                
+                if (wishes.length === 0) {
+                    document.getElementById('emptyWishes').style.display = 'block';
+                }
+            }
+        }
+
+        // 更新心愿计数
+        function updateWishCount() {
+            const totalWishes = wishes.length;
+            const completedWishes = wishes.filter(w => w.completed).length;
+            
+            document.getElementById('wishCount').textContent = totalWishes;
+            document.getElementById('completedCount').textContent = completedWishes;
+        }
+
+        // 导出心愿
+        function exportWishes() {
+            if (wishes.length === 0) {
+                showStarMessage('💫 还没有心愿可以导出哦～先许个愿吧！');
+                return;
+            }
+            
+            const dataStr = JSON.stringify(wishes, null, 2);
+            const dataBlob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(dataBlob);
+            
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `我的星空心愿_${new Date().toLocaleDateString('zh-CN').replace(/\//g, '-')}.json`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            URL.revokeObjectURL(url);
+            showStarMessage('📤 心愿已导出！记得好好保管哦～');
+        }
+
+        // 导入心愿
+        function importWishes(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const importedWishes = JSON.parse(e.target.result);
+                    if (Array.isArray(importedWishes)) {
+                        // 合并心愿，避免重复
+                        const existingIds = new Set(wishes.map(w => w.id));
+                        const newWishes = importedWishes.filter(w => !existingIds.has(w.id));
+                        
+                        wishes = [...newWishes, ...wishes];
+                        saveWishes();
+                        displayWishes();
+                        updateWishCount();
+                        
+                        showStarMessage(`📥 成功导入 ${newWishes.length} 个心愿！欢迎回来～`);
+                    } else {
+                        showStarMessage('💫 文件格式不正确，请选择正确的心愿文件～');
+                    }
+                } catch (error) {
+                    showStarMessage('💫 导入失败，请检查文件格式是否正确～');
+                }
+            };
+            reader.readAsText(file);
+            
+            // 清空文件输入
+            event.target.value = '';
+        }
+
+        // 创建星座连线效果
+        function createConstellation() {
+            const constellation = document.getElementById('constellation');
+            constellation.innerHTML = '';
+            
+            // 创建几条随机的星座连线
+            for (let i = 0; i < 5; i++) {
+                const line = document.createElement('div');
+                line.className = 'constellation-line';
+                line.style.left = Math.random() * 80 + '%';
+                line.style.top = Math.random() * 80 + '%';
+                line.style.width = Math.random() * 100 + 50 + 'px';
+                line.style.transform = `rotate(${Math.random() * 360}deg)`;
+                line.style.animationDelay = Math.random() * 3 + 's';
+                constellation.appendChild(line);
+            }
+        }
+
+        // 键盘事件监听
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && document.activeElement.id === 'wishInput') {
+                makeWish();
+            }
+        });
+
+        // 页面加载时的初始化
+        window.addEventListener('load', function() {
+            loadWishes();
+            createStars();
+            createConstellation();
+            updateWishCount();
+            
+            // 定期创建流星
+            shootingStarInterval = setInterval(createShootingStar, 8000);
+            
+            // 定期创建魔法粒子
+            particleInterval = setInterval(() => {
+                if (Math.random() < 0.3) {
+                    createMagicalEffect();
+                }
+            }, 15000);
+            
+            // 定期重新创建星座
+            setInterval(createConstellation, 20000);
+            
+            // 欢迎消息
+            setTimeout(() => {
+                if (wishes.length === 0) {
+                    showStarMessage('🌟 欢迎来到星空许愿！在这里，每个心愿都会被星星记住～');
+                } else {
+                    showStarMessage('🌟 欢迎回来！星空一直在等着你～');
+                }
+            }, 2000);
+        });
+
+        // 页面卸载时清理
+        window.addEventListener('beforeunload', function() {
+            if (shootingStarInterval) {
+                clearInterval(shootingStarInterval);
+            }
+            if (particleInterval) {
+                clearInterval(particleInterval);
+            }
+        });
+
+        // 注册Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('data:text/javascript;base64,Y29uc3QgQ0FDSEVfTkFNRSA9ICdzdGFycnktd2lzaGVzLXYxJzsKY29uc3QgdXJsc1RvQ2FjaGUgPSBbCiAgJy4nLAogICcuL2luZGV4Lmh0bWwnCl07CgpzZWxmLmFkZEV2ZW50TGlzdGVuZXIoJ2luc3RhbGwnLCBmdW5jdGlvbihldmVudCkgewogIGV2ZW50LndhaXRVbnRpbCgKICAgIGNhY2hlcy5vcGVuKENBQ0hFX05BTUUpCiAgICAgIC50aGVuKGZ1bmN0aW9uKGNhY2hlKSB7CiAgICAgICAgcmV0dXJuIGNhY2hlLmFkZEFsbCh1cmxzVG9DYWNoZSk7CiAgICAgIH0pCiAgKTsKfSk7CgpzZWxmLmFkZEV2ZW50TGlzdGVuZXIoJ2ZldGNoJywgZnVuY3Rpb24oZXZlbnQpIHsKICBldmVudC5yZXNwb25kV2l0aCgKICAgIGNhY2hlcy5tYXRjaChldmVudC5yZXF1ZXN0KQogICAgICAudGhlbihmdW5jdGlvbihyZXNwb25zZSkgewogICAgICAgIGlmIChyZXNwb25zZSkgewogICAgICAgICAgcmV0dXJuIHJlc3BvbnNlOwogICAgICAgIH0KICAgICAgICByZXR1cm4gZmV0Y2goZXZlbnQucmVxdWVzdCk7CiAgICAgIH0pCiAgKTsKfSk7')
+                .then(function(registration) {
+                    console.log('Service Worker 注册成功');
+                }, function(err) {
+                    console.log('Service Worker 注册失败');
+                });
+            });
+        }
+
+        // 添加一些特殊的星空互动
+        let clickCount = 0;
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('star') || e.target.classList.contains('moon')) {
+                clickCount++;
+                if (clickCount % 7 === 0) {
+                    showStarMessage('🌟 你发现了星空的小秘密！连续点击星星会有惊喜哦～');
+                    createMagicalEffect();
+                    createShootingStar();
+                }
+            }
+        });
+
+        // 添加夜晚模式检测
+        function checkNightMode() {
+            const hour = new Date().getHours();
+            if (hour >= 20 || hour <= 6) {
+                document.body.style.filter = 'brightness(0.9)';
+                setTimeout(() => {
+                    if (Math.random() < 0.2) {
+                        showStarMessage('🌙 深夜了，星空格外美丽呢～记得早点休息哦！');
+                    }
+                }, 30000);
+            }
+        }
+
+        // 每30秒检查一次时间
+        setInterval(checkNightMode, 30000);
+        checkNightMode();
+
+        // 添加心愿提醒功能
+        function wishReminder() {
+            const lastWishTime = localStorage.getItem('lastWishTime');
+            const now = Date.now();
+            const oneDay = 24 * 60 * 60 * 1000;
+            
+            if (!lastWishTime || now - parseInt(lastWishTime) > oneDay) {
+                setTimeout(() => {
+                    if (Math.random() < 0.3) {
+                        showStarMessage('💫 好久没有新的心愿了，今天有什么想许的吗？');
+                    }
+                }, 60000);
+            }
+        }
+
+        // 当许愿时更新时间
+        const originalMakeWish = makeWish;
+        makeWish = function() {
+            localStorage.setItem('lastWishTime', Date.now().toString());
+            originalMakeWish();
+        };
+
+        // 初始化提醒
+        wishReminder();
+    </script>
+</body>
+</html>
